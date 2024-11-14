@@ -11,10 +11,10 @@ export const getAllOrder = async () => {
 };
 
 export const editCategory = async (oId, status) => {
-  let data = { oId: oId, status: status };
+  let data = { status: status };
   console.log(data);
   try {
-    let res = await axios.post(`${apiURL}/api/order/update-order`, data);
+    let res = await axios.put(`${apiURL}/api/orders/${oId}`, data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -22,9 +22,8 @@ export const editCategory = async (oId, status) => {
 };
 
 export const deleteOrder = async (oId) => {
-  let data = { oId: oId };
   try {
-    let res = await axios.post(`${apiURL}/api/order/delete-order`, data);
+    let res = await axios.delete(`${apiURL}/api/order/delete-order/${oId}`);
     return res.data;
   } catch (error) {
     console.log(error);

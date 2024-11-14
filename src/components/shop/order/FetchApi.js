@@ -24,7 +24,7 @@ export const getPaymentProcess = async (paymentData) => {
 
 export const createOrder = async (orderData) => {
   try {
-    let res = await axios.post(`${apiURL}/api/order/create-order`, orderData);
+    let res = await axios.post(`${apiURL}/api/orders`, orderData);
     return res.data;
   } catch (error) {
     console.log(error);

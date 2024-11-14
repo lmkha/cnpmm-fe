@@ -20,10 +20,10 @@ const AllProduct = (props) => {
     setLoading(true);
     let responseData = await getAllProduct();
     setTimeout(() => {
-      if (responseData && responseData.Products) {
+      if (responseData && responseData.products) {
         dispatch({
           type: "fetchProductsAndChangeState",
-          payload: responseData.Products,
+          payload: responseData.products,
         });
         setLoading(false);
       }

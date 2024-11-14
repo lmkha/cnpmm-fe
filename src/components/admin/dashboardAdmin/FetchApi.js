@@ -22,7 +22,7 @@ export const getSliderImages = async () => {
 export const postUploadImage = async (formData) => {
   try {
     let res = await axios.post(
-      `${apiURL}/api/customize/upload-slide-image`,
+      `${apiURL}/api/customize/slides`,
       formData
     );
     return res.data;
@@ -33,9 +33,7 @@ export const postUploadImage = async (formData) => {
 
 export const postDeleteImage = async (id) => {
   try {
-    let res = await axios.post(`${apiURL}/api/customize/delete-slide-image`, {
-      id,
-    });
+    let res = await axios.delete(`${apiURL}/api/customize/slides/${id}`);
     return res.data;
   } catch (error) {
     console.log(error);

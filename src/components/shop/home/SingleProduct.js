@@ -26,8 +26,8 @@ const SingleProduct = (props) => {
     try {
       let responseData = await getAllProduct();
       setTimeout(() => {
-        if (responseData && responseData.Products) {
-          dispatch({ type: "setProducts", payload: responseData.Products });
+        if (responseData && responseData.products) {
+          dispatch({ type: "setProducts", payload: responseData.products });
           dispatch({ type: "loading", payload: false });
         }
       }, 500);
@@ -100,9 +100,8 @@ const SingleProduct = (props) => {
                 <div className="absolute top-0 right-0 mx-2 my-2 md:mx-4">
                   <svg
                     onClick={(e) => isWishReq(e, item._id, setWlist)}
-                    className={`${
-                      isWish(item._id, wList) && "hidden"
-                    } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700 transition-all duration-300 ease-in`}
+                    className={`${isWish(item._id, wList) && "hidden"
+                      } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700 transition-all duration-300 ease-in`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -117,9 +116,8 @@ const SingleProduct = (props) => {
                   </svg>
                   <svg
                     onClick={(e) => unWishReq(e, item._id, setWlist)}
-                    className={`${
-                      !isWish(item._id, wList) && "hidden"
-                    } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700 transition-all duration-300 ease-in`}
+                    className={`${!isWish(item._id, wList) && "hidden"
+                      } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700 transition-all duration-300 ease-in`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"

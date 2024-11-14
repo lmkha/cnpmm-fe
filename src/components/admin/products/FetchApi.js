@@ -10,7 +10,7 @@ export const getAllProduct = async () => {
   }
 };
 
-export const createPorductImage = async ({ pImage }) => {
+export const createProductImage = async ({ pImage }) => {
   /* Most important part for uploading multiple image  */
   let formData = new FormData();
   for (const file of pImage) {
@@ -61,7 +61,7 @@ export const editProduct = async (product) => {
     }
   }
   /* Most important part for updating multiple image  */
-  formData.append("pId", product.pId);
+  // formData.append("pId", product.pId);
   formData.append("pName", product.pName);
   formData.append("pDescription", product.pDescription);
   formData.append("pStatus", product.pStatus);
@@ -72,7 +72,7 @@ export const editProduct = async (product) => {
   formData.append("pImages", product.pImages);
 
   try {
-    let res = await axios.post(`${apiURL}/api/product/products`, formData);
+    let res = await axios.put(`${apiURL}/api/products/${product.pId}`, formData);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -81,7 +81,7 @@ export const editProduct = async (product) => {
 
 export const deleteProduct = async (pId) => {
   try {
-    let res = await axios.post(`${apiURL}/api/products`, { pId });
+    let res = await axios.delete(`${apiURL}/api/products/${pId}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -90,9 +90,7 @@ export const deleteProduct = async (pId) => {
 
 export const productByCategory = async (catId) => {
   try {
-    let res = await axios.post(`${apiURL}/api/product/products`, {
-      catId,
-    });
+    let res = await axios.get(`${apiURL}/api/products/category/${catId}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -101,9 +99,7 @@ export const productByCategory = async (catId) => {
 
 export const productByPrice = async (price) => {
   try {
-    let res = await axios.post(`${apiURL}/api/product/product-by-price`, {
-      price,
-    });
+    let res = await axios.get(`${apiURL}/api/products/price/${price}`);
     return res.data;
   } catch (error) {
     console.log(error);

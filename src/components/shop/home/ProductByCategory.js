@@ -132,8 +132,8 @@ const PageComponent = () => {
   const fetchData = async () => {
     try {
       let responseData = await productByCategory(catId);
-      if (responseData && responseData.Products) {
-        setProducts(responseData.Products);
+      if (responseData && responseData.products) {
+        setProducts(responseData.products);
       }
     } catch (error) {
       console.log(error);

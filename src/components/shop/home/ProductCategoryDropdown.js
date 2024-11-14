@@ -18,10 +18,11 @@ const CategoryList = () => {
 
   const fetchData = async () => {
     try {
-      let responseData = await getAllCategory();
-      if (responseData && responseData.Categories) {
-        setCategories(responseData.Categories);
-      }
+      getAllCategory().then((res) => {
+        if (res && res.categories) {
+          setCategories(res.categories);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -183,9 +184,8 @@ const Search = () => {
 
   return (
     <div
-      className={`${
-        data.searchDropdown ? "" : "hidden"
-      } my-4 flex items-center justify-between`}
+      className={`${data.searchDropdown ? "" : "hidden"
+        } my-4 flex items-center justify-between`}
     >
       <input
         value={search}

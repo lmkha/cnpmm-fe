@@ -11,6 +11,7 @@ export const categoryState = {
 };
 
 export const categoryReducer = (state, action) => {
+  console.log("Reducer Action:", action); // Log toàn bộ action
   switch (action.type) {
     /* Get all category */
     case "fetchCategoryAndChangeState":

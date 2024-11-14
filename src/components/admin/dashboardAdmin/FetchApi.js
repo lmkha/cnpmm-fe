@@ -3,7 +3,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 export const DashboardData = async () => {
   try {
-    let res = await axios.post(`${apiURL}/api/customize/dashboard-data`);
+    let res = await axios.get(`${apiURL}/api/customize/dashboard`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ export const DashboardData = async () => {
 
 export const getSliderImages = async () => {
   try {
-    let res = await axios.get(`${apiURL}/api/customize/get-slide-image`);
+    let res = await axios.get(`${apiURL}/api/customize/slides`);
     return res.data;
   } catch (error) {
     console.log(error);

@@ -8,14 +8,17 @@ const BearerToken = () =>
 const Headers = () => {
   return {
     headers: {
-      token: `Bearer ${BearerToken()}`,
+      Authorization: `Bearer ${BearerToken()}`,
     },
   };
 };
 
 export const getAllCategory = async () => {
   try {
-    let res = await axios.get(`${apiURL}/api/category/all-category`, Headers());
+    let res = await axios.get(
+      `${apiURL}/api/categories`,
+      Headers()
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -36,21 +39,22 @@ export const createCategory = async ({
 
   try {
     let res = await axios.post(
-      `${apiURL}/api/category/add-category`,
+      `${apiURL}/api/categories`,
       formData,
       Headers()
     );
     return res.data;
   } catch (error) {
+    console.log('vai linh hon')
     console.log(error);
   }
 };
 
 export const editCategory = async (cId, des, status) => {
-  let data = { cId: cId, cDescription: des, cStatus: status };
+  let data = { cDescription: des, cStatus: status };
   try {
-    let res = await axios.post(
-      `${apiURL}/api/category/edit-category`,
+    let res = await axios.put(
+      `${apiURL}/api/categories/${cId}`,
       data,
       Headers()
     );
@@ -62,9 +66,8 @@ export const editCategory = async (cId, des, status) => {
 
 export const deleteCategory = async (cId) => {
   try {
-    let res = await axios.post(
-      `${apiURL}/api/category/delete-category`,
-      { cId },
+    let res = await axios.delete(
+      `${apiURL}/api/categories/${cId}`,
       Headers()
     );
     return res.data;

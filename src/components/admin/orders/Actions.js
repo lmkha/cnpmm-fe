@@ -4,10 +4,10 @@ export const fetchData = async (dispatch) => {
   dispatch({ type: "loading", payload: true });
   let responseData = await getAllOrder();
   setTimeout(() => {
-    if (responseData && responseData.Orders) {
+    if (responseData && responseData.orders) {
       dispatch({
         type: "fetchOrderAndChangeState",
-        payload: responseData.Orders,
+        payload: responseData.orders,
       });
       dispatch({ type: "loading", payload: false });
     }
@@ -39,38 +39,38 @@ export const filterOrder = async (
   setDropdown
 ) => {
   let responseData = await getAllOrder();
-  if (responseData && responseData.Orders) {
+  if (responseData && responseData.orders) {
     let newData;
     if (type === "All") {
       dispatch({
         type: "fetchOrderAndChangeState",
-        payload: responseData.Orders,
+        payload: responseData.orders,
       });
       setDropdown(!dropdown);
     } else if (type === "Not processed") {
-      newData = responseData.Orders.filter(
+      newData = responseData.orders.filter(
         (item) => item.status === "Not processed"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
     } else if (type === "Processing") {
-      newData = responseData.Orders.filter(
+      newData = responseData.orders.filter(
         (item) => item.status === "Processing"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
     } else if (type === "Shipped") {
-      newData = responseData.Orders.filter((item) => item.status === "Shipped");
+      newData = responseData.orders.filter((item) => item.status === "Shipped");
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
     } else if (type === "Delivered") {
-      newData = responseData.Orders.filter(
+      newData = responseData.orders.filter(
         (item) => item.status === "Delivered"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
     } else if (type === "Cancelled") {
-      newData = responseData.Orders.filter(
+      newData = responseData.orders.filter(
         (item) => item.status === "Cancelled"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });

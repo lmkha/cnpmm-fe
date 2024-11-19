@@ -72,8 +72,8 @@ const FilterList = () => {
     if (price === "all") {
       try {
         let responseData = await getAllProduct();
-        if (responseData && responseData.Products) {
-          dispatch({ type: "setProducts", payload: responseData.Products });
+        if (responseData && responseData.products) {
+          dispatch({ type: "setProducts", payload: responseData.products });
         }
       } catch (error) {
         console.log(error);
@@ -83,9 +83,9 @@ const FilterList = () => {
       try {
         setTimeout(async () => {
           let responseData = await productByPrice(price);
-          if (responseData && responseData.Products) {
-            console.log(responseData.Products);
-            dispatch({ type: "setProducts", payload: responseData.Products });
+          if (responseData && responseData.products) {
+            console.log(responseData.products);
+            dispatch({ type: "setProducts", payload: responseData.products });
             dispatch({ type: "loading", payload: false });
           }
         }, 700);
@@ -165,8 +165,8 @@ const Search = () => {
     try {
       setTimeout(async () => {
         let responseData = await getAllProduct();
-        if (responseData && responseData.Products) {
-          setPa(responseData.Products);
+        if (responseData && responseData.products) {
+          setPa(responseData.products);
           dispatch({ type: "loading", payload: false });
         }
       }, 700);

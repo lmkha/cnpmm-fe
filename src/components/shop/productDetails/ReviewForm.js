@@ -26,10 +26,10 @@ const ReviewForm = (props) => {
   const fetchData = async () => {
     try {
       let responseData = await getSingleProduct(id);
-      if (responseData.Product) {
+      if (responseData.product) {
         dispatch({
           type: "singleProductDetail",
-          payload: responseData.Product,
+          payload: responseData.product,
         });
         console.log(data);
       }

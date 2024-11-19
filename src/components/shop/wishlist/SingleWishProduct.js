@@ -16,8 +16,8 @@ const Product = () => {
     setLoading(true);
     let responseData = await wishListProducts();
     setTimeout(() => {
-      if (responseData && responseData.Products) {
-        setProducts(responseData.Products);
+      if (responseData && responseData.products) {
+        setProducts(responseData.products);
         setLoading(false);
       }
     }, 50);

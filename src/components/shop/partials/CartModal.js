@@ -26,8 +26,8 @@ const CartModal = () => {
   const fetchData = async () => {
     try {
       let responseData = await cartListProduct();
-      if (responseData && responseData.Products) {
-        dispatch({ type: "cartProduct", payload: responseData.Products });
+      if (responseData && responseData.products) {
+        dispatch({ type: "cartProduct", payload: responseData.products });
         dispatch({ type: "cartTotalCost", payload: totalCost() });
       }
     } catch (error) {
@@ -57,15 +57,13 @@ const CartModal = () => {
     <Fragment>
       {/* Black Overlay */}
       <div
-        className={`${
-          !data.cartModal ? "hidden" : ""
-        } fixed top-0 z-30 w-full h-full bg-black opacity-50`}
+        className={`${!data.cartModal ? "hidden" : ""
+          } fixed top-0 z-30 w-full h-full bg-black opacity-50`}
       />
       {/* Cart Modal Start */}
       <section
-        className={`${
-          !data.cartModal ? "hidden" : ""
-        } fixed z-40 inset-0 flex items-start justify-end`}
+        className={`${!data.cartModal ? "hidden" : ""
+          } fixed z-40 inset-0 flex items-start justify-end`}
       >
         <div
           style={{ background: "#303031" }}

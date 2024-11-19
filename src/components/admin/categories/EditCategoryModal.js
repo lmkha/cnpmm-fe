@@ -19,10 +19,10 @@ const EditCategoryModal = (props) => {
 
   const fetchData = async () => {
     let responseData = await getAllCategory();
-    if (responseData.Categories) {
+    if (responseData.categories) {
       dispatch({
         type: "fetchCategoryAndChangeState",
-        payload: responseData.Categories,
+        payload: responseData.categories,
       });
     }
   };

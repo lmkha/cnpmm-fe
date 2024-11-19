@@ -4,9 +4,9 @@ export const fetchData = async (cartListProduct, dispatch) => {
   dispatch({ type: "loading", payload: true });
   try {
     let responseData = await cartListProduct();
-    if (responseData && responseData.Products) {
+    if (responseData && responseData.products) {
       setTimeout(function () {
-        dispatch({ type: "cartProduct", payload: responseData.Products });
+        dispatch({ type: "cartProduct", payload: responseData.products });
         dispatch({ type: "loading", payload: false });
       }, 1000);
     }

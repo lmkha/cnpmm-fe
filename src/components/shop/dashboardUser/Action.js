@@ -20,8 +20,8 @@ export const fetchData = async (dispatch) => {
   try {
     let responseData = await getUserById(userId);
     setTimeout(() => {
-      if (responseData && responseData.User) {
-        dispatch({ type: "userDetails", payload: responseData.User });
+      if (responseData && responseData.user) {
+        dispatch({ type: "userDetails", payload: responseData.user });
         dispatch({ type: "loading", payload: false });
       }
     }, 500);
@@ -38,9 +38,9 @@ export const fetchOrderByUser = async (dispatch) => {
   try {
     let responseData = await getOrderByUser(userId);
     setTimeout(() => {
-      if (responseData && responseData.Order) {
+      if (responseData && responseData.order) {
         console.log(responseData);
-        dispatch({ type: "OrderByUser", payload: responseData.Order });
+        dispatch({ type: "OrderByUser", payload: responseData.order });
         dispatch({ type: "loading", payload: false });
       }
     }, 500);

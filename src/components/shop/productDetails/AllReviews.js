@@ -26,10 +26,10 @@ const AllReviews = (props) => {
   const fetchData = async () => {
     try {
       let responseData = await getSingleProduct(id);
-      if (responseData.Product) {
+      if (responseData.product) {
         dispatch({
           type: "singleProductDetail",
-          payload: responseData.Product,
+          payload: responseData.product,
         });
       }
       if (responseData.error) {
@@ -101,8 +101,8 @@ const AllReviews = (props) => {
                         })}
                       </div>
                       {item.user &&
-                      isAuthenticate() &&
-                      item.user._id === isAuthenticate().user._id ? (
+                        isAuthenticate() &&
+                        item.user._id === isAuthenticate().user._id ? (
                         <div className="flex justify-center my-2">
                           <span
                             onClick={(e) =>

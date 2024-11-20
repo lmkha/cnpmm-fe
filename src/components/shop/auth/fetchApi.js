@@ -13,9 +13,12 @@ export const loginReq = async ({ email, password }) => {
   const data = { email, password };
   try {
     let res = await axios.post(`${apiURL}/api/auth/signin`, data);
+    console.log('ResponseData', res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    return {
+      error: error.response.data.error,
+    }
   }
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { postAddReview, postDeleteReview } from "./FetchApi";
+import { postAddReview, postDeleteReview, putEditReview } from "./FetchApi";
 import { isAuthenticate } from "../auth/fetchApi";
 
 export const Alert = (color, text) => (
@@ -26,6 +26,33 @@ export const deleteReview = async (
     let responseData = await postDeleteReview({
       rId: reviewId,
       pId: productId,
+    });
+    if (responseData.success) {
+      fetchData();
+      setFdata({ success: responseData.success });
+    } else if (responseData.error) {
+      fetchData();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editReview = async (
+  productId,
+  reviewId,
+  rating,
+  review,
+  fetchData,
+  setFdata
+) => {
+  try {
+    let responseData = await putEditReview({
+      pId: productId,
+      rId: reviewId,
+      rating: rating,
+      review: review,
+      uId: JSON.parse(localStorage.getItem("jwt")).user._id,
     });
     if (responseData.success) {
       fetchData();

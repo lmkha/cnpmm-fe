@@ -1,7 +1,8 @@
 import { createOrder } from "./FetchApi";
 
 export const fetchData = async (cartListProduct, dispatch) => {
-  dispatch({ type: "loading", payload: true });
+  // dispatch({ type: "loading", payload: true });
+  dispatch({ type: "loading", payload: false });
   try {
     let responseData = await cartListProduct();
     if (responseData && responseData.products) {

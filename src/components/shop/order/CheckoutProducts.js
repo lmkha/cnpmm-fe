@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext, useState } from "react";
+import React, { Fragment, useEffect, useContext, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../layout";
 import { subTotal, quantity, totalCost } from "../partials/Mixins";
@@ -8,6 +8,8 @@ import { getBrainTreeToken, getPaymentProcess } from "./FetchApi";
 import { fetchData, fetchbrainTree, pay } from "./Action";
 
 import DropIn from "braintree-web-drop-in-react";
+import { TextField } from "@mui/material";
+import IMask from 'imask';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -48,7 +50,7 @@ export const CheckoutComponent = (props) => {
             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           ></path>
         </svg>
-        Please wait untill finish
+        Please wait until finish
       </div>
     );
   }
@@ -62,7 +64,7 @@ export const CheckoutComponent = (props) => {
             <CheckoutProducts products={data.cartProduct} />
           </div>
           <div className="w-full order-first md:order-last md:w-1/2">
-            {state.clientToken !== null ? (
+            {state.clientToken === null ? (
               <Fragment>
                 <div
                   onBlur={(e) => setState({ ...state, error: false })}
@@ -75,42 +77,53 @@ export const CheckoutComponent = (props) => {
                   ) : (
                     ""
                   )}
-                  <div className="flex flex-col py-2">
+                  <div className="flex flex-col py-2 mb-2">
                     <label htmlFor="address" className="pb-2">
-                      Dalivery Address
+                      Delivery Address
                     </label>
-                    <input
+                    <TextField
+                      key={"address"}
+                      size="small"
                       value={state.address}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setState({
                           ...state,
-                          address: e.target.value,
+                          address: e,
                           error: false,
                         })
-                      }
-                      type="text"
-                      id="address"
-                      className="border px-4 py-2"
-                      placeholder="Address..."
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label htmlFor="address" className="pb-2">
+                      Delivery Address
+                    </label>
+                    <TextField
+                      key={"address"}
+                      size="small"
+                      value={state.address}
+                      onChange={(e) => {
+                        setState({
+                          ...state,
+                          address: e,
+                          error: false,
+                        })
+                      }}
                     />
                   </div>
                   <div className="flex flex-col py-2 mb-2">
                     <label htmlFor="phone" className="pb-2">
                       Phone
                     </label>
-                    <input
+                    <PhoneTextField
                       value={state.phone}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setState({
                           ...state,
-                          phone: e.target.value,
+                          phone: e,
                           error: false,
                         })
-                      }
-                      type="number"
-                      id="phone"
-                      className="border px-4 py-2"
-                      placeholder="+880"
+                      }}
                     />
                   </div>
                   <DropIn
@@ -137,7 +150,7 @@ export const CheckoutComponent = (props) => {
                     className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
                     style={{ background: "#303031" }}
                   >
-                    Pay now
+                    Order
                   </div>
                 </div>
               </Fragment>
@@ -207,6 +220,47 @@ const CheckoutProducts = ({ products }) => {
         )}
       </div>
     </Fragment>
+  );
+};
+
+const PhoneTextField = ({ value, onChange }) => {
+  const inputRef = useRef(null);
+  const maskRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      maskRef.current = IMask(inputRef.current, {
+        mask: '0000-000-000',
+      });
+
+      maskRef.current.on('accept', () => {
+        onChange(maskRef.current.value);
+      });
+
+      return () => {
+        maskRef.current.destroy();
+        maskRef.current = null;
+      };
+    }
+  }, [onChange]);
+
+  useEffect(() => {
+    if (maskRef.current && maskRef.current.value !== value) {
+      maskRef.current.value = value;
+      maskRef.current.updateValue();
+    }
+  }, [value]);
+
+  return (
+    <TextField
+      size="small"
+      inputRef={inputRef}
+      value={value}
+      placeholder="0000-000-000"
+      onChange={() => { }}
+      variant="outlined"
+      fullWidth
+    />
   );
 };
 

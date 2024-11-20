@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext } from "react";
 import { loginReq } from "./fetchApi";
 import { LayoutContext } from "../index";
 import { useSnackbar } from 'notistack';
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -83,7 +83,7 @@ const Login = (props) => {
               layoutDispatch({ type: "loginSignupError", payload: false });
             }}
             error={data.error ? true : false}
-            helperText={data.error ? data.error : ""}
+            helperText={data?.error || ""}
           />
         </div>
         <div className="flex flex-col">
@@ -114,8 +114,8 @@ const Login = (props) => {
               }
               label="Password"
               error={data.error ? true : false}
-              helperText={data.error ? data.error : ""}
             />
+            <FormHelperText error={data.error ? true : false}>{data?.error || ""}</FormHelperText>
           </FormControl>
           {!data.error ? "" : alert(data.error)}
         </div>

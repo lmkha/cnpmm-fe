@@ -173,7 +173,7 @@ const CartModal = () => {
                       cartModalOpen();
                     }}
                   >
-                    Checkout ${data.cartTotalCost}.00
+                    Order Now {data.cartTotalCost} Đ
                   </div>
                 ) : (
                   <div

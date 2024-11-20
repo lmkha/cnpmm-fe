@@ -5,26 +5,12 @@ export const fetchData = async (cartListProduct, dispatch) => {
   dispatch({ type: "loading", payload: false });
   try {
     let responseData = await cartListProduct();
+    console.log('Check cart list data', responseData);
     if (responseData && responseData.products) {
       setTimeout(function () {
         dispatch({ type: "cartProduct", payload: responseData.products });
         dispatch({ type: "loading", payload: false });
       }, 1000);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fetchbrainTree = async (getBrainTreeToken, setState) => {
-  try {
-    let responseData = await getBrainTreeToken();
-    if (responseData && responseData) {
-      setState({
-        clientToken: responseData.clientToken,
-        success: responseData.success,
-      });
-      console.log(responseData);
     }
   } catch (error) {
     console.log(error);

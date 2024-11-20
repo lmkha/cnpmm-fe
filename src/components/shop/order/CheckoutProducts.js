@@ -4,11 +4,9 @@ import { LayoutContext } from "../layout";
 import { subTotal, quantity, totalCost } from "../partials/Mixins";
 
 import { cartListProduct } from "../partials/FetchApi";
-import { getBrainTreeToken, getPaymentProcess } from "./FetchApi";
-import { fetchData, fetchbrainTree, pay } from "./Action";
+import { fetchData, pay } from "./Action";
 
-import DropIn from "braintree-web-drop-in-react";
-import { TextField } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 import IMask from 'imask';
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -28,7 +26,6 @@ export const CheckoutComponent = (props) => {
 
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
-    fetchbrainTree(getBrainTreeToken, setState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -57,13 +54,14 @@ export const CheckoutComponent = (props) => {
   return (
     <Fragment>
       <section className="mx-4 mt-20 md:mx-12 md:mt-32 lg:mt-24">
-        <div className="text-2xl mx-2">Order</div>
+        <div className="text-2xl mx-2">Products</div>
         {/* Product List */}
         <div className="flex flex-col md:flex md:space-x-2 md:flex-row">
           <div className="md:w-1/2">
             <CheckoutProducts products={data.cartProduct} />
           </div>
           <div className="w-full order-first md:order-last md:w-1/2">
+            <Typography variant="h4" sx={{ textAlign: 'center' }}>Order Information</Typography>
             {state.clientToken === null ? (
               <Fragment>
                 <div
@@ -96,7 +94,7 @@ export const CheckoutComponent = (props) => {
                   </div>
                   <div className="flex flex-col py-2">
                     <label htmlFor="address" className="pb-2">
-                      Delivery Address
+                      Name
                     </label>
                     <TextField
                       key={"address"}
@@ -126,27 +124,18 @@ export const CheckoutComponent = (props) => {
                       }}
                     />
                   </div>
-                  <DropIn
-                    options={{
-                      authorization: state.clientToken,
-                      paypal: {
-                        flow: "vault",
-                      },
-                    }}
-                    onInstance={(instance) => (state.instance = instance)}
-                  />
+                  <Stack spacing={1} sx={{
+                    justifyContent: 'end',
+                    alignItems: 'end',
+                    py: 2
+                  }}>
+                    <Typography variant="h5">Total</Typography>
+                    <Typography>{totalCost(data.cartProduct)} Đ</Typography>
+                  </Stack>
                   <div
-                    onClick={(e) =>
-                      pay(
-                        data,
-                        dispatch,
-                        state,
-                        setState,
-                        getPaymentProcess,
-                        totalCost,
-                        history
-                      )
-                    }
+                    onClick={(e) => {
+
+                    }}
                     className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
                     style={{ background: "#303031" }}
                   >

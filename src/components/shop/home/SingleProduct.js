@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { getAllProduct } from "../../admin/products/FetchApi";
 import { HomeContext } from "./index";
 import { isWishReq, unWishReq, isWish } from "./Mixins";
+import Typography from '@mui/material/Typography';
+import { Stack } from "@mui/material";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -95,7 +97,7 @@ const SingleProduct = (props) => {
                     </span>
                   </div>
                 </div>
-                <div>${item.pPrice}.00</div>
+                <PriceComponent price={item.pPrice} />
                 {/* WhisList Logic  */}
                 <div className="absolute top-0 right-0 mx-2 my-2 md:mx-4">
                   <svg
@@ -142,5 +144,29 @@ const SingleProduct = (props) => {
     </Fragment>
   );
 };
+
+
+export function PriceComponent({
+  price,
+  sx = {},
+  stackProps = {},
+  priceTypographyProps = {},
+  currencyTypographyProps = {},
+}) {
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('vi-VN').format(value);
+  };
+
+  return (
+    <Stack direction="row" spacing={1} sx={sx} {...stackProps}>
+      <Typography variant="h6" component="p" {...priceTypographyProps}>
+        {formatCurrency(price)}
+      </Typography>
+      <Typography variant="h5" component="p" {...currencyTypographyProps}>
+        ₫
+      </Typography>
+    </Stack>
+  );
+}
 
 export default SingleProduct;

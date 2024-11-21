@@ -8,6 +8,7 @@ import { fetchData, order } from "./Action";
 
 import { Stack, TextField, Typography } from "@mui/material";
 import IMask from 'imask';
+import { PriceComponent } from "../home/SingleProduct";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -170,9 +171,13 @@ const CheckoutProducts = ({ products }) => {
                   <div className="text-lg md:ml-6 truncate">
                     {product.pName}
                   </div>
-                  <div className="md:ml-6 font-semibold text-gray-600 text-sm">
+                  {/* <div className="md:ml-6 font-semibold text-gray-600 text-sm">
                     Price : ${product.pPrice}.00{" "}
-                  </div>
+                  </div> */}
+                  <Stack direction={'row'} spacing={2}>
+                    <Typography variant="h6">Price</Typography>
+                    <PriceComponent price={product.pPrice} />
+                  </Stack>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
                     Quantitiy : {quantity(product._id)}
                   </div>

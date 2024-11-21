@@ -91,7 +91,7 @@ const SingleProduct = (props) => {
                       </svg>
                     </span>
                     <span className="text-gray-700">
-                      {item.pRatingsReviews.length}
+                      {item.avgReview}
                     </span>
                   </div>
                 </div>

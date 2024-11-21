@@ -1,9 +1,21 @@
 import axios from "axios";
 const apiURL = process.env.REACT_APP_API_URL;
 
+const BearerToken = () =>
+  localStorage.getItem("jwt")
+    ? JSON.parse(localStorage.getItem("jwt")).token
+    : false;
+const Headers = () => {
+  return {
+    headers: {
+      Authorization: `Bearer ${BearerToken()}`,
+    },
+  };
+};
+
 export const getAllProduct = async () => {
   try {
-    let res = await axios.get(`${apiURL}/api/products`);
+    let res = await axios.get(`${apiURL}/api/products`, Headers());
     return res.data;
   } catch (error) {
     console.log(error);
@@ -44,7 +56,7 @@ export const createProduct = async ({
   formData.append("pOffer", pOffer);
 
   try {
-    let res = await axios.post(`${apiURL}/api/products`, formData);
+    let res = await axios.post(`${apiURL}/api/products`, formData, Headers());
     return res.data;
   } catch (error) {
     console.log(error);
@@ -72,7 +84,7 @@ export const editProduct = async (product) => {
   formData.append("pImages", product.pImages);
 
   try {
-    let res = await axios.put(`${apiURL}/api/products/${product.pId}`, formData);
+    let res = await axios.put(`${apiURL}/api/products/${product.pId}`, formData, Headers());
     return res.data;
   } catch (error) {
     console.log(error);
@@ -81,7 +93,7 @@ export const editProduct = async (product) => {
 
 export const deleteProduct = async (pId) => {
   try {
-    let res = await axios.delete(`${apiURL}/api/products/${pId}`);
+    let res = await axios.delete(`${apiURL}/api/products/${pId}`, Headers());
     return res.data;
   } catch (error) {
     console.log(error);
@@ -90,7 +102,7 @@ export const deleteProduct = async (pId) => {
 
 export const productByCategory = async (catId) => {
   try {
-    let res = await axios.get(`${apiURL}/api/products/category/${catId}`);
+    let res = await axios.get(`${apiURL}/api/products/category/${catId}`, Headers());
     return res.data;
   } catch (error) {
     console.log(error);
@@ -99,7 +111,7 @@ export const productByCategory = async (catId) => {
 
 export const productByPrice = async (price) => {
   try {
-    let res = await axios.get(`${apiURL}/api/products/price/${price}`);
+    let res = await axios.get(`${apiURL}/api/products/price/${price}`, Headers());
     return res.data;
   } catch (error) {
     console.log(error);

@@ -4,7 +4,7 @@ import { LayoutContext } from "../layout";
 import { subTotal, quantity, totalCost } from "../partials/Mixins";
 
 import { cartListProduct } from "../partials/FetchApi";
-import { fetchData, pay } from "./Action";
+import { fetchData, order } from "./Action";
 
 import { Stack, TextField, Typography } from "@mui/material";
 import IMask from 'imask';
@@ -12,16 +12,14 @@ import IMask from 'imask';
 const apiURL = process.env.REACT_APP_API_URL;
 
 export const CheckoutComponent = (props) => {
-  const history = useHistory();
   const { data, dispatch } = useContext(LayoutContext);
 
   const [state, setState] = useState({
     address: "",
+    name: "",
     phone: "",
     error: false,
     success: false,
-    clientToken: null,
-    instance: {},
   });
 
   useEffect(() => {
@@ -62,105 +60,86 @@ export const CheckoutComponent = (props) => {
           </div>
           <div className="w-full order-first md:order-last md:w-1/2">
             <Typography variant="h4" sx={{ textAlign: 'center' }}>Order Information</Typography>
-            {state.clientToken === null ? (
-              <Fragment>
-                <div
-                  onBlur={(e) => setState({ ...state, error: false })}
-                  className="p-4 md:p-8"
-                >
-                  {state.error ? (
-                    <div className="bg-red-200 py-2 px-4 rounded">
-                      {state.error}
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  <div className="flex flex-col py-2 mb-2">
-                    <label htmlFor="address" className="pb-2">
-                      Delivery Address
-                    </label>
-                    <TextField
-                      key={"address"}
-                      size="small"
-                      value={state.address}
-                      onChange={(e) => {
-                        setState({
-                          ...state,
-                          address: e,
-                          error: false,
-                        })
-                      }}
-                    />
+            <Fragment>
+              <div
+                onBlur={(e) => setState({ ...state, error: false })}
+                className="p-4 md:p-8"
+              >
+                {state.error ? (
+                  <div className="bg-red-200 py-2 px-4 rounded">
+                    {state.error}
                   </div>
-                  <div className="flex flex-col py-2">
-                    <label htmlFor="address" className="pb-2">
-                      Name
-                    </label>
-                    <TextField
-                      key={"address"}
-                      size="small"
-                      value={state.address}
-                      onChange={(e) => {
-                        setState({
-                          ...state,
-                          address: e,
-                          error: false,
-                        })
-                      }}
-                    />
-                  </div>
-                  <div className="flex flex-col py-2 mb-2">
-                    <label htmlFor="phone" className="pb-2">
-                      Phone
-                    </label>
-                    <PhoneTextField
-                      value={state.phone}
-                      onChange={(e) => {
-                        setState({
-                          ...state,
-                          phone: e,
-                          error: false,
-                        })
-                      }}
-                    />
-                  </div>
-                  <Stack spacing={1} sx={{
-                    justifyContent: 'end',
-                    alignItems: 'end',
-                    py: 2
-                  }}>
-                    <Typography variant="h5">Total</Typography>
-                    <Typography>{totalCost(data.cartProduct)} Đ</Typography>
-                  </Stack>
-                  <div
-                    onClick={(e) => {
-
+                ) : (
+                  ""
+                )}
+                <div className="flex flex-col py-2 mb-2">
+                  <label htmlFor="address" className="pb-2">
+                    Delivery Address
+                  </label>
+                  <TextField
+                    key={"address"}
+                    size="small"
+                    value={state.address}
+                    onChange={(e) => {
+                      setState({
+                        ...state,
+                        address: e.target.value,
+                        error: false,
+                      })
                     }}
-                    className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
-                    style={{ background: "#303031" }}
-                  >
-                    Order
-                  </div>
+                  />
                 </div>
-              </Fragment>
-            ) : (
-              <div className="flex items-center justify-center py-12">
-                <svg
-                  className="w-12 h-12 animate-spin text-gray-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div className="flex flex-col py-2">
+                  <label htmlFor="address" className="pb-2">
+                    Name
+                  </label>
+                  <TextField
+                    key={"name"}
+                    size="small"
+                    value={state.name}
+                    onChange={(e) => {
+                      setState({
+                        ...state,
+                        name: e.target.value,
+                        error: false,
+                      })
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col py-2 mb-2">
+                  <label htmlFor="phone" className="pb-2">
+                    Phone
+                  </label>
+                  <PhoneTextField
+                    value={state.phone}
+                    onChange={(e) => {
+                      setState({
+                        ...state,
+                        phone: e,
+                        error: false,
+                      })
+                    }}
+                  />
+                </div>
+                <Stack spacing={1} sx={{
+                  justifyContent: 'end',
+                  alignItems: 'end',
+                  py: 2
+                }}>
+                  <Typography variant="h5">Total</Typography>
+                  <Typography>{totalCost(data.cartProduct)} Đ</Typography>
+                </Stack>
+                <div
+                  onClick={(e) => {
+                    order(dispatch, state, setState, totalCost(data.cartProduct));
+                  }}
+                  className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
+                  style={{ background: "#303031" }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  ></path>
-                </svg>
+                  Order
+                </div>
               </div>
-            )}
+            </Fragment>
           </div>
         </div>
       </section>
@@ -223,7 +202,8 @@ const PhoneTextField = ({ value, onChange }) => {
       });
 
       maskRef.current.on('accept', () => {
-        onChange(maskRef.current.value);
+        const rawValue = maskRef.current.unmaskedValue;
+        onChange(rawValue);
       });
 
       return () => {

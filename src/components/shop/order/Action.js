@@ -1,11 +1,9 @@
 import { createOrder } from "./FetchApi";
 
 export const fetchData = async (cartListProduct, dispatch) => {
-  // dispatch({ type: "loading", payload: true });
   dispatch({ type: "loading", payload: false });
   try {
     let responseData = await cartListProduct();
-    console.log('Check cart list data', responseData);
     if (responseData && responseData.products) {
       setTimeout(function () {
         dispatch({ type: "cartProduct", payload: responseData.products });
@@ -79,5 +77,46 @@ export const pay = async (
         console.log(error);
         setState({ ...state, error: error.message });
       });
+  }
+};
+
+
+export const order = async (
+  dispatch,
+  state,
+  setState,
+  totalCost,
+) => {
+  console.log(state);
+  if (!state.address) {
+    setState({ ...state, error: "Please provide your address" });
+  } else if (!state.phone) {
+    setState({ ...state, error: "Please provide your phone number" });
+
+  } else if (state.phone.length !== 10) {
+    setState({ ...state, error: "Phone number must be 10 digits" });
+  } else {
+    try {
+      const orderData = {
+        allProduct: JSON.parse(localStorage.getItem("cart")),
+        user: JSON.parse(localStorage.getItem("jwt")).user._id,
+        amount: totalCost,
+        address: state.address,
+        phone: state.phone
+      }
+      let responseData = await createOrder(orderData);
+      if (responseData.success) {
+        localStorage.setItem("cart", JSON.stringify([]));
+        dispatch({ type: "cartProduct", payload: null });
+        dispatch({ type: "cartTotalCost", payload: null });
+        dispatch({ type: "orderSuccess", payload: true });
+        setState({ clientToken: "", instance: {} });
+        dispatch({ type: "loading", payload: false });
+      } else if (responseData.error) {
+        console.log(responseData.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 };

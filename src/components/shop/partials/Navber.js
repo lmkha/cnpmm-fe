@@ -357,7 +357,16 @@ const Navber = (props) => {
                 />
               </svg>
               <span className="absolute top-0 ml-6 mt-1 bg-yellow-700 rounded px-1 text-white text-xs hover:text-gray-200 font-semibold">
-                {JSON.parse(localStorage.getItem("cart")).length}
+                {(() => {
+                  const cart = localStorage.getItem("cart");
+                  try {
+                    const parsedCart = cart ? JSON.parse(cart) : [];
+                    return Array.isArray(parsedCart) ? parsedCart.length : 0;
+                  } catch (error) {
+                    console.error("Invalid JSON in localStorage for 'cart':", error);
+                    return 0;
+                  }
+                })()}
               </span>
             </div>
           </div>

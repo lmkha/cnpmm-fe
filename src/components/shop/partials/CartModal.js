@@ -21,7 +21,7 @@ const CartModal = () => {
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data.cartModal]);
 
   const fetchData = async () => {
     try {

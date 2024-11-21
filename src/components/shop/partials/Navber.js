@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import "./style.css";
 
@@ -11,6 +11,10 @@ const Navber = (props) => {
   const location = useLocation();
 
   const { data, dispatch } = useContext(LayoutContext);
+
+  useEffect(() => {
+    console.log("Navber.js, cartProduct changed!", data.cartProduct);
+  }, [data.cartProduct]);
 
   const navberToggleOpen = () =>
     data.navberHamburger
@@ -92,8 +96,8 @@ const Navber = (props) => {
             >
               <svg
                 className={`${location.pathname === "/wish-list"
-                    ? "fill-current text-gray-800"
-                    : ""
+                  ? "fill-current text-gray-800"
+                  : ""
                   } w-8 h-8 text-gray-600 cursor-pointer`}
                 fill="none"
                 stroke="currentColor"
@@ -353,7 +357,7 @@ const Navber = (props) => {
                 />
               </svg>
               <span className="absolute top-0 ml-6 mt-1 bg-yellow-700 rounded px-1 text-white text-xs hover:text-gray-200 font-semibold">
-                {data.cartProduct !== null ? data.cartProduct.length : 0}
+                {JSON.parse(localStorage.getItem("cart")).length}
               </span>
             </div>
           </div>

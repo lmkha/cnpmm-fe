@@ -30,12 +30,25 @@ const AllCategory = (props) => {
   };
 
   const deleteCategoryReq = async (cId) => {
-    let deleteC = await deleteCategory(cId);
-    if (deleteC.error) {
-      console.log(deleteC.error);
-    } else if (deleteC.success) {
-      console.log(deleteC.success);
-      fetchData();
+    try {
+      let deleteC = await deleteCategory(cId);
+      console.log(deleteC);
+
+      if (deleteC.error) {
+        // Hiển thị lỗi nếu API trả về lỗi
+        alert(`Error: ${deleteC.error}`);
+        return;
+      } else if (deleteC.success) {
+        // Thành công
+        console.log(deleteC.success);
+        fetchData(); // Load lại dữ liệu
+      }
+    } catch (error) {
+      // Bắt lỗi từ API hoặc lỗi không mong muốn
+      console.error(error);
+      alert(
+        `Failed to delete category.\nMessage: Several products exist in category`
+      );
     }
   };
 

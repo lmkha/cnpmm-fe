@@ -64,7 +64,6 @@ export const createProduct = async ({
 };
 
 export const editProduct = async (product) => {
-  console.log(product);
   /* Most important part for updating multiple image  */
   let formData = new FormData();
   if (product.pEditImages) {
@@ -77,14 +76,19 @@ export const editProduct = async (product) => {
   formData.append("pName", product.pName);
   formData.append("pDescription", product.pDescription);
   formData.append("pStatus", product.pStatus);
-  formData.append("pCategory", product.pCategory._id);
+  formData.append("pCategory", product.pCategory);
   formData.append("pQuantity", product.pQuantity);
   formData.append("pPrice", product.pPrice);
   formData.append("pOffer", product.pOffer);
   formData.append("pImages", product.pImages);
 
   try {
-    let res = await axios.put(`${apiURL}/api/products/${product.pId}`, formData, Headers());
+    console.log(formData);
+    let res = await axios.put(
+      `${apiURL}/api/products/${product.pId}`,
+      formData,
+      Headers()
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -102,7 +106,10 @@ export const deleteProduct = async (pId) => {
 
 export const productByCategory = async (catId) => {
   try {
-    let res = await axios.get(`${apiURL}/api/products/category/${catId}`, Headers());
+    let res = await axios.get(
+      `${apiURL}/api/products/category/${catId}`,
+      Headers()
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -111,7 +118,10 @@ export const productByCategory = async (catId) => {
 
 export const productByPrice = async (price) => {
   try {
-    let res = await axios.get(`${apiURL}/api/products/price/${price}`, Headers());
+    let res = await axios.get(
+      `${apiURL}/api/products/price/${price}`,
+      Headers()
+    );
     return res.data;
   } catch (error) {
     console.log(error);

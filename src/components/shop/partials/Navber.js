@@ -357,7 +357,7 @@ const Navber = (props) => {
                 />
               </svg>
               <span className="absolute top-0 ml-6 mt-1 bg-yellow-700 rounded px-1 text-white text-xs hover:text-gray-200 font-semibold">
-                {data.inCart !== null ? data.inCart.length : 0}
+                {JSON.parse(localStorage.getItem("cart")).length}
               </span>
             </div>
           </div>

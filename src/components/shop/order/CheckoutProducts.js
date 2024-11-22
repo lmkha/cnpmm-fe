@@ -128,7 +128,7 @@ export const CheckoutComponent = (props) => {
                   py: 2
                 }}>
                   <Typography variant="h5">Total</Typography>
-                  <Typography>{totalCost(data.cartProduct)} Đ</Typography>
+                  <PriceComponent price={totalCost(data.cartProduct)} />
                 </Stack>
                 <div
                   onClick={(e) => {
@@ -164,27 +164,24 @@ const CheckoutProducts = ({ products }) => {
                 <div className="md:flex md:items-center md:space-x-4">
                   <img
                     onClick={(e) => history.push(`/products/${product._id}`)}
-                    className="cursor-pointer md:h-20 md:w-20 object-cover object-center"
+                    className="cursor-pointer md:h-20 md:w-20 object-cover object-center rounded-lg"
                     src={`${apiURL}/uploads/products/${product.pImages[0]}`}
                     alt="wishListproduct"
                   />
                   <div className="text-lg md:ml-6 truncate">
                     {product.pName}
                   </div>
-                  {/* <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Price : ${product.pPrice}.00{" "}
-                  </div> */}
-                  <Stack direction={'row'} spacing={2}>
-                    <Typography variant="h6">Price</Typography>
-                    <PriceComponent price={product.pPrice} />
-                  </Stack>
+                </div>
+                <Stack direction={'row'} spacing={4} sx={{
+                  justifyContent: 'end',
+                  alignItems: 'center',
+                  py: 2
+                }}>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
                     Quantitiy : {quantity(product._id)}
                   </div>
-                  <div className="font-semibold text-gray-600 text-sm">
-                    Subtotal : ${subTotal(product._id, product.pPrice)}.00
-                  </div>
-                </div>
+                  <PriceComponent price={product.pPrice} />
+                </Stack>
               </div>
             );
           })

@@ -28,6 +28,9 @@ export const createOrder = async (orderData) => {
     console.log('Check response data', res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    return {
+      success: false,
+      error: error.response.data.error,
+    }
   }
 };

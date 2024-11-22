@@ -71,7 +71,12 @@ const Login = (props) => {
       ) : (
         ""
       )}
-      <form className="space-y-4">
+      <form className="space-y-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          formSubmit();
+        }}
+      >
         <div className="flex flex-col">
           <TextField
             id="email"
@@ -81,6 +86,11 @@ const Login = (props) => {
             onChange={(e) => {
               setData({ ...data, email: e.target.value, error: false });
               layoutDispatch({ type: "loginSignupError", payload: false });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                formSubmit();
+              }
             }}
             error={data.error ? true : false}
             helperText={data?.error || ""}
@@ -96,6 +106,11 @@ const Login = (props) => {
               onChange={(e) => {
                 setData({ ...data, password: e.target.value, error: false });
                 layoutDispatch({ type: "loginSignupError", payload: false });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  formSubmit();
+                }
               }}
               endAdornment={
                 <InputAdornment position="end">
@@ -135,7 +150,14 @@ const Login = (props) => {
           </a>
         </div>
         <div
-          onClick={(e) => formSubmit()}
+          role="button"
+          onClick={formSubmit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              formSubmit();
+            }
+          }}
+          tabIndex={0}
           style={{ background: "#303031" }}
           className="font-medium px-4 py-2 text-white text-center cursor-pointer"
         >

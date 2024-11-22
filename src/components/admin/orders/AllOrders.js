@@ -3,8 +3,32 @@ import moment from "moment";
 
 import { OrderContext } from "./index";
 import { fetchData, editOrderReq, deleteOrderReq } from "./Actions";
+import { Stack, Typography } from "@mui/material";
 
 const apiURL = process.env.REACT_APP_API_URL;
+
+const PriceComponent = ({
+  price,
+  sx = {},
+  stackProps = {},
+  priceTypographyProps = {},
+  currencyTypographyProps = {},
+}) => {
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('vi-VN').format(value);
+  };
+
+  return (
+    <Stack direction="row" spacing={1} sx={sx} {...stackProps}>
+      <Typography variant="body1" component="p" {...priceTypographyProps}>
+        {formatCurrency(price)}
+      </Typography>
+      <Typography variant="h5" component="p" {...currencyTypographyProps}>
+        ₫
+      </Typography>
+    </Stack>
+  );
+}
 
 const AllCategory = (props) => {
   const { data, dispatch } = useContext(OrderContext);
@@ -137,7 +161,8 @@ const CategoryTable = ({ order, editOrder }) => {
           )}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          ${order.amount}.00
+          {/* ${order.amount}.00 */}
+          <PriceComponent price={order.amount} />
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}

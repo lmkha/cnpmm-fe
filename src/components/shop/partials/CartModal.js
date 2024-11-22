@@ -5,6 +5,8 @@ import { cartListProduct } from "./FetchApi";
 import { isAuthenticate } from "../auth/fetchApi";
 import { cartList } from "../productDetails/Mixins";
 import { subTotal, quantity, totalCost } from "./Mixins";
+import { PriceComponent } from "../home/SingleProduct";
+import { Stack, Typography } from "@mui/material";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -21,7 +23,7 @@ const CartModal = () => {
     fetchData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data.cartModal]);
 
   const fetchData = async () => {
     try {
@@ -120,7 +122,16 @@ const CartModal = () => {
                               <span className="text-sm text-gray-400">
                                 Subtotoal :
                               </span>{" "}
-                              ${subTotal(item._id, item.pPrice)}.00
+                              {/* ${subTotal(item._id, item.pPrice)}.00 */}
+                              <PriceComponent
+                                price={subTotal(item._id, item.pPrice)}
+                                priceTypographyProps={{
+                                  fontSize: '14px',
+                                }}
+                                currencyTypographyProps={{
+                                  fontSize: '16px',
+                                }}
+                              />
                             </div>{" "}
                             {/* SUbtotal Count */}
                           </div>
@@ -173,7 +184,16 @@ const CartModal = () => {
                       cartModalOpen();
                     }}
                   >
-                    Order Now {data.cartTotalCost} Đ
+                    {/* Order Now {data.cartTotalCost} Đ */}
+                    <Stack direction={'row'} spacing={2} sx={{
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}>
+                      <Typography variant="h6" >Order Now</Typography>
+                      <PriceComponent price={data.cartTotalCost} priceTypographyProps={{
+                        fontSize: '20px',
+                      }} />
+                    </Stack>
                   </div>
                 ) : (
                   <div

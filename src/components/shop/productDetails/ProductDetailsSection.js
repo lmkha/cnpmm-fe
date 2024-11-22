@@ -11,6 +11,7 @@ import { cartListProduct } from "../partials/FetchApi";
 import { isWishReq, unWishReq, isWish } from "../home/Mixins";
 import { updateQuantity, slideImage, addToCart, cartList } from "./Mixins";
 import { totalCost } from "../partials/Mixins";
+import { PriceComponent } from "../home/SingleProduct";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -175,7 +176,7 @@ const ProductDetailsSection = (props) => {
               <div className="text-2xl tracking-wider">{sProduct.pName}</div>
               <div className="flex justify-between items-center">
                 <span className="text-xl tracking-wider text-yellow-700">
-                  ${sProduct.pPrice}.00
+                  <PriceComponent price={sProduct.pPrice} />
                 </span>
                 <span>
                   <svg

@@ -22,6 +22,15 @@ export const getAllOrder = async () => {
   }
 };
 
+export const getOrderByTransactionId = async (transactionId) => {
+  try {
+    let res = await axios.get(`${apiURL}/api/orders/transaction/${transactionId}`, Headers());
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const editCategory = async (oId, status) => {
   let data = { status: status };
   console.log(data);

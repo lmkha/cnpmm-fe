@@ -1,6 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
+import { OrderContext } from "./index";
+import { getOrderByTransactionId } from "./FetchApi";
+import { fetchData } from "./Actions";
 
 const SearchFilter = (props) => {
+  const { data, dispatch } = useContext(OrderContext);
+
   return (
     <Fragment>
       <div className="rounded-full flex items-center justify-between overflow-hidden">
@@ -22,6 +27,25 @@ const SearchFilter = (props) => {
           placeholder="Transaction id..."
           className="py-2 px-2 focus:outline-none rounded-r-full w-full"
           type="text"
+          onChange={(e) => {
+            const value = e.target.value.trim();
+            if (value.length === 36) {
+              getOrderByTransactionId(value).then((data) => {
+                if (data.orders && data.orders.length > 0) {
+                  console.log('data.orders', data.orders);
+                  dispatch({
+                    type: "fetchOrderAndChangeState",
+                    payload: data.orders,
+                  });
+                }
+              });
+              return;
+            }
+            if (value.length === 0) {
+              fetchData(dispatch);
+              return;
+            }
+          }}
         />
       </div>
     </Fragment>

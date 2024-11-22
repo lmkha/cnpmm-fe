@@ -23,6 +23,7 @@ const Slider = (props) => {
             className="w-full"
             src={`${apiURL}/uploads/customize/${data.sliderImages[slide].slideImage}`}
             alt="sliderImage"
+            style={{ height: "500px", width: "100%", objectFit: "cover" }}
           />
         ) : (
           ""

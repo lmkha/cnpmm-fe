@@ -5,6 +5,7 @@ export const fetchData = async (dispatch) => {
   let responseData = await getAllOrder();
   setTimeout(() => {
     if (responseData && responseData.orders) {
+      console.log('Fetch All Orders', responseData.orders);
       dispatch({
         type: "fetchOrderAndChangeState",
         payload: responseData.orders,

@@ -87,7 +87,6 @@ export const order = async (
   setState,
   totalCost,
 ) => {
-  console.log(state);
   if (!state.address) {
     setState({ ...state, error: "Please provide your address" });
   } else if (!state.phone) {
@@ -112,11 +111,11 @@ export const order = async (
         dispatch({ type: "orderSuccess", payload: true });
         setState({ clientToken: "", instance: {} });
         dispatch({ type: "loading", payload: false });
-      } else if (responseData.error) {
-        console.log(responseData.error);
+      } else {
+        setState({ ...state, error: responseData.error });
       }
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
     }
   }
 };

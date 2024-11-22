@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import "./style.css";
 
@@ -11,10 +11,6 @@ const Navber = (props) => {
   const location = useLocation();
 
   const { data, dispatch } = useContext(LayoutContext);
-
-  useEffect(() => {
-    console.log("Navber.js, cartProduct changed!", data.cartProduct);
-  }, [data.cartProduct]);
 
   const navberToggleOpen = () =>
     data.navberHamburger

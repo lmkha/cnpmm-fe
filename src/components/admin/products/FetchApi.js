@@ -119,7 +119,7 @@ export const productByCategory = async (catId) => {
 export const productByPrice = async (price) => {
   try {
     let res = await axios.get(
-      `${apiURL}/api/products/price/${price}`,
+      `${apiURL}/api/products/filter?price=${price}&filterType=greater&sortType=asc`,
       Headers()
     );
     return res.data;

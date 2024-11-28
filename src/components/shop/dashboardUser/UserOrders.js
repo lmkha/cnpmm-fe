@@ -140,7 +140,7 @@ const OrdersComponent = () => {
 
   if (data.loading) {
     return (
-      <div className="w-full md:w-9/12 flex items-center justify-center py-24">
+      <div className="w-full md:w-10/12 flex items-center justify-center py-24">
         <svg
           className="w-12 h-12 animate-spin text-gray-600"
           fill="none"
@@ -160,7 +160,7 @@ const OrdersComponent = () => {
   }
   return (
     <Fragment>
-      <div className="flex flex-col w-full my-4 md:my-0 md:w-9/12 md:px-8">
+      <div className="flex flex-col w-full my-4 md:my-0 md:w-10/12 md:px-8">
         <div className="border">
           <div className="py-4 px-4 text-lg font-semibold border-t-2 border-yellow-700">
             Orders

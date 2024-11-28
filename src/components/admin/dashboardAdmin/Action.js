@@ -15,6 +15,8 @@ export const GetAllData = async (dispatch) => {
 
 export const todayAllOrders = async (dispatch) => {
   let responseData = await getAllOrder();
+  console.log("______________");
+  console.log(responseData);
   if (responseData) {
     dispatch({ type: "totalOrders", payload: responseData });
   }

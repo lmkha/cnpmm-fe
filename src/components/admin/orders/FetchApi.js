@@ -16,6 +16,7 @@ const Headers = () => {
 export const getAllOrder = async () => {
   try {
     let res = await axios.get(`${apiURL}/api/orders`, Headers());
+    console.log(res);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -24,12 +25,15 @@ export const getAllOrder = async () => {
 
 export const getOrderByTransactionId = async (transactionId) => {
   try {
-    let res = await axios.get(`${apiURL}/api/orders/transaction/${transactionId}`, Headers());
+    let res = await axios.get(
+      `${apiURL}/api/orders/transaction/${transactionId}`,
+      Headers()
+    );
     return res.data;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const editCategory = async (oId, status) => {
   let data = { status: status };

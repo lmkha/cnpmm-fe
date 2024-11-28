@@ -16,7 +16,9 @@ const TableHeader = () => {
           <th className="px-4 py-2 border">Total</th>
           <th className="px-4 py-2 border">Phone</th>
           <th className="px-4 py-2 border">Address</th>
-          <th className="px-4 py-2 border">Transaction Id</th>
+          <th className="px-4 py-2 border" style={{ maxWidth: "150px" }}>
+            Transaction Id
+          </th>
           <th className="px-4 py-2 border">Checkout</th>
           <th className="px-4 py-2 border">Processing</th>
         </tr>
@@ -27,34 +29,54 @@ const TableHeader = () => {
 
 const TableBody = ({ order }) => {
   const getRandomSize = () => {
-    const sizes = ['S', 'M'];
+    const sizes = ["S", "M"];
     return sizes[Math.floor(Math.random() * sizes.length)];
   };
 
   return (
     <Fragment>
-      <tr className="border-b">
-        <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((product, i) => {
-            return (
-              <span className="block flex items-center space-x-2" key={i}>
-                <img
-                  className="w-8 h-8 object-cover object-center"
-                  src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
-                  alt="productImage"
-                />
-                <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
-              </span>
-            );
-          })}
-        </td>
+      <tr className="border-b" style={{ height: "100%" }}>
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.allProduct.map((product, i) => {
             return (
-              <span className="mb-4 block flex items-center justify-center space-x-2" key={i}>
-                <span>{getRandomSize()}</span>
-              </span>
+              <div
+                className="block flex items-center"
+                key={i}
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    className="w-8 h-8 object-cover object-center"
+                    src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
+                    alt="productImage"
+                    style={{ marginRight: 8 }}
+                  />
+                  <span>{product.id.pName}</span>
+                </div>
+                <span style={{ justifyContent: "end", marginLeft: 8 }}>
+                  x{product.quantitiy}
+                </span>
+              </div>
+            );
+          })}
+        </td>
+        <td
+          className="hover:bg-gray-200 p-2 text-center cursor-default gap-10"
+          style={{ justifyContent: "space-between" }}
+        >
+          {order.allProduct.map((product, i) => {
+            return (
+              <div
+                className="block flex items-center justify-center space-x-2"
+                key={i}
+              >
+                <div>{getRandomSize()}</div>
+              </div>
             );
           })}
         </td>
@@ -90,7 +112,10 @@ const TableBody = ({ order }) => {
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">
+        <td
+          className="hover:bg-gray-200 p-2 text-center"
+          style={{ maxWidth: "150px" }}
+        >
           {order.transactionId}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
@@ -115,7 +140,7 @@ const OrdersComponent = () => {
 
   if (data.loading) {
     return (
-      <div className="w-full md:w-9/12 flex items-center justify-center py-24">
+      <div className="w-full md:w-10/12 flex items-center justify-center py-24">
         <svg
           className="w-12 h-12 animate-spin text-gray-600"
           fill="none"
@@ -135,7 +160,7 @@ const OrdersComponent = () => {
   }
   return (
     <Fragment>
-      <div className="flex flex-col w-full my-4 md:my-0 md:w-9/12 md:px-8">
+      <div className="flex flex-col w-full my-4 md:my-0 md:w-10/12 md:px-8">
         <div className="border">
           <div className="py-4 px-4 text-lg font-semibold border-t-2 border-yellow-700">
             Orders

@@ -151,11 +151,17 @@ export const CheckoutComponent = (props) => {
 
 const CheckoutProducts = ({ products }) => {
   const history = useHistory();
-
   const getRandomSize = () => {
     const sizes = ['S', 'M'];
     return sizes[Math.floor(Math.random() * sizes.length)];
   };
+
+  const [size, setSize] = useState('');
+
+  useEffect(() => {
+    // Chỉ gọi một lần khi component mount
+    setSize(getRandomSize());
+  }, []);
 
   return (
     <Fragment>
@@ -184,7 +190,7 @@ const CheckoutProducts = ({ products }) => {
                   py: 2
                 }}>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Size : {getRandomSize()}
+                    Size : {size}
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
                     Quantitiy : {quantity(product._id)}

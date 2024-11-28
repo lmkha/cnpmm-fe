@@ -55,6 +55,11 @@ const CartModal = () => {
     }
   };
 
+  const getRandomSize = () => {
+    const sizes = ['S', 'M'];
+    return sizes[Math.floor(Math.random() * sizes.length)];
+  };
+
   return (
     <Fragment>
       {/* Black Overlay */}
@@ -111,9 +116,18 @@ const CartModal = () => {
                               <div className="text-sm text-gray-400">
                                 Quantity :
                               </div>
-                              <div className="flex items-end">
+                              <div className="flex items-end pr-4">
                                 <span className="text-sm text-gray-200">
                                   {quantity(item._id)}
+                                </span>
+                              </div>
+
+                              <div className="text-sm text-gray-400">
+                                Size :
+                              </div>
+                              <div className="flex items-end">
+                                <span className="text-sm text-gray-200">
+                                  {getRandomSize()}
                                 </span>
                               </div>
                             </div>

@@ -11,6 +11,7 @@ const TableHeader = () => {
       <thead>
         <tr>
           <th className="px-4 py-2 border">Products</th>
+          <th className="px-4 py-2 border">Size</th>
           <th className="px-4 py-2 border">Status</th>
           <th className="px-4 py-2 border">Total</th>
           <th className="px-4 py-2 border">Phone</th>
@@ -25,6 +26,11 @@ const TableHeader = () => {
 };
 
 const TableBody = ({ order }) => {
+  const getRandomSize = () => {
+    const sizes = ['S', 'M'];
+    return sizes[Math.floor(Math.random() * sizes.length)];
+  };
+
   return (
     <Fragment>
       <tr className="border-b">
@@ -39,6 +45,15 @@ const TableBody = ({ order }) => {
                 />
                 <span>{product.id.pName}</span>
                 <span>{product.quantitiy}x</span>
+              </span>
+            );
+          })}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center cursor-default">
+          {order.allProduct.map((product, i) => {
+            return (
+              <span className="mb-4 block flex items-center justify-center space-x-2" key={i}>
+                <span>{getRandomSize()}</span>
               </span>
             );
           })}

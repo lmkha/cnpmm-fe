@@ -29,6 +29,7 @@ export const CheckoutComponent = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   if (data.loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -151,6 +152,11 @@ export const CheckoutComponent = (props) => {
 const CheckoutProducts = ({ products }) => {
   const history = useHistory();
 
+  const getRandomSize = () => {
+    const sizes = ['S', 'M'];
+    return sizes[Math.floor(Math.random() * sizes.length)];
+  };
+
   return (
     <Fragment>
       <div className="grid grid-cols-2 md:grid-cols-1">
@@ -177,6 +183,9 @@ const CheckoutProducts = ({ products }) => {
                   alignItems: 'center',
                   py: 2
                 }}>
+                  <div className="md:ml-6 font-semibold text-gray-600 text-sm">
+                    Size : {getRandomSize()}
+                  </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
                     Quantitiy : {quantity(product._id)}
                   </div>

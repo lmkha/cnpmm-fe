@@ -13,9 +13,54 @@ import { updateQuantity, slideImage, addToCart, cartList } from "./Mixins";
 import { totalCost } from "../partials/Mixins";
 import { PriceComponent } from "../home/SingleProduct";
 
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
+export function BasicButtonGroup() {
+  const [alignment, setAlignment] = React.useState(0);
+
+  return (
+    <ButtonGroup
+      size="small"
+      variant="outlined"
+      aria-label="Basic button group"
+      color="inherit"
+      sx={{
+        '& .MuiButton-root': {
+          borderColor: 'gray',
+          '&:not(:last-of-type)': {
+            borderRightColor: 'gray',
+          },
+        },
+      }}
+    >
+      <Button sx={{
+        color: alignment === 0 ? 'white' : 'black',
+        backgroundColor: alignment === 0 ? 'black' : 'white'
+      }}
+        onClick={() => setAlignment(0)}>S</Button>
+      <Button sx={{
+        color: alignment === 1 ? 'white' : 'black',
+        backgroundColor: alignment === 1 ? 'black' : 'white'
+      }}
+        onClick={() => setAlignment(1)}>M</Button>
+      <Button sx={{
+        color: alignment === 2 ? 'white' : 'black',
+        backgroundColor: alignment === 2 ? 'black' : 'white'
+      }}
+        onClick={() => setAlignment(2)}>L</Button>
+      <Button sx={{
+        color: alignment === 3 ? 'white' : 'black',
+        backgroundColor: alignment === 3 ? 'black' : 'white'
+      }}
+        onClick={() => setAlignment(3)}>XL</Button>
+    </ButtonGroup>
+  );
+}
+
 const apiURL = process.env.REACT_APP_API_URL;
 
-const ProductDetailsSection = (props) => {
+export const ProductDetailsSection = (props) => {
   let { id } = useParams();
 
   const { data, dispatch } = useContext(ProductDetailsContext);
@@ -215,6 +260,7 @@ const ProductDetailsSection = (props) => {
             <div className="my-4 md:my-6 text-gray-600">
               {sProduct.pDescription}
             </div>
+            <BasicButtonGroup />
             <div className="my-4 md:my-6">
               {+quantitiy === +sProduct.pQuantity ? (
                 <span className="text-xs text-red-500">Stock limited</span>
@@ -420,5 +466,6 @@ const ProductDetailsSection = (props) => {
     </Fragment>
   );
 };
+
 
 export default ProductDetailsSection;
